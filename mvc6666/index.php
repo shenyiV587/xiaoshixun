@@ -22,7 +22,5 @@ include CORE.'/core.php';
 spl_autoload_register('\Core\core::load');
 
 \Core\core::run();
-
-
-
+爱你
  ?>
