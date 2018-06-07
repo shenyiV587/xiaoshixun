@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<center>
+		<table>
+			
+				<tr>
+					<td>编号</td>
+					<td>用户名</td>
+					<td>密码</td>
+				</tr>
+				<tbody id="box">
+				<?php foreach ($arr['data'] as $key => $value) { ?>
+					<tr>
+						<td><?php echo $value['user_id']?></td>
+						<td><?php echo $value['user_name']?></td>
+						<td><?php echo $value['user_pwd']?></td>
+					
+
+					</tr>
+				<?php }?>
+			</tbody>
+		</table>
+		<a href="javascript:void(0)" class='fen' page='1'>首页</a>
+		<a href="javascript:void(0)" class='fen' page='<?php echo $arr['up']?>' id='up'>上一页</a>
+		<a href="javascript:void(0)" class='fen'  page='<?php echo $arr['down']?>' id='down'>下一页</a>
+		<a href="javascript:void(0)" class='fen'  page='<?php echo $arr['total']?>' id='total'>尾页</a>
+	</center>
+</body>
+</html>
+<script src="/mvc6666/public/jquery.js"></script>
+<script>
+	$(document).on("click",".fen",function(){
+		var page=$(this).attr('page');
+
+		$.ajax({
+			url:"http://www.yii.com/mvc6666/index.php/user",
+			data:{page:page},
+			type:"POST",
+			dataType:"json",
+			success:function(res){
+				$("#box").empty();
+				$("#up").attr('page',res.up);
+				$("#down").attr('page',res.down);
+				$("#total").attr('page',res.total);
+				$.each(res.data,function(){
+					var tr=$("<tr></tr>");
+					tr.append("<td>"+this.user_id+"</td>");
+					tr.append("<td>"+this.user_name+"</td>");
+					tr.append("<td>"+this.user_pwd+"</td>");
+				
+					$("#box").append(tr);
+				})
+			}
+		})
+	})
+</script>
